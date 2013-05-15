@@ -27,7 +27,7 @@ EXTENSION['3.1.5'] = 'tgz'
 EXTENSION['3.2.4'] = 'tar.bz2'
 EXTENSION['3.3.1'] = 'tar.bz2'
 
-for version in ['2.6.8', '2.7.4', '3.1.5', '3.2.4', '3.3.1'][-2:]:
+for version in ['2.6.8', '2.7.4', '3.1.5', '3.2.4', '3.3.1']:
 
     short_version = version[:3]
 
