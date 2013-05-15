@@ -5,28 +5,38 @@ import urllib2
 DISTRIBUTE_VERSION = "0.6.40"
 PIP_VERSION = "1.3.1"
 
-PYTHON_URL = "http://www.python.org/ftp/python/{version}/Python-{version}.tar.{ext}"
+PYTHON_URL = "http://www.python.org/ftp/python/{version}/Python-{version}.{ext}"
 DISTRIBUTE_URL = "https://pypi.python.org/packages/source/d/distribute/distribute-{dv}.tar.gz".format(dv=DISTRIBUTE_VERSION)
 PIP_URL = "https://pypi.python.org/packages/source/p/pip/pip-{pv}.tar.gz".format(pv=PIP_VERSION)
 
 def download(url):
+    print url
     u = urllib2.urlopen(url)
     f = open(os.path.basename(url), 'wb')
     f.write(u.read())
     f.close()
-    os.system('tar xvzf {filename}'.format(filename=os.path.basename(url)))
+    if url.endswith('bz2'):
+        os.system('tar xvjf {filename}'.format(filename=os.path.basename(url)))
+    else:
+        os.system('tar xvzf {filename}'.format(filename=os.path.basename(url)))
 
+EXTENSION = {}
+EXTENSION['2.6.8'] = 'tgz'
+EXTENSION['2.7.4'] = 'tgz'
+EXTENSION['3.1.5'] = 'tgz'
+EXTENSION['3.2.4'] = 'tar.bz2'
+EXTENSION['3.3.1'] = 'tar.bz2'
 
-for version in ['2.6.8', '2.7.4', '3.1.5', '3.2.4', '3.3.1']:
+for version in ['2.6.8', '2.7.4', '3.1.5', '3.2.4', '3.3.1'][-2:]:
 
     short_version = version[:3]
 
     if os.path.exists('Python-{version}'.format(version=version)):
         shutil.rmtree('Python-{version}'.format(version=version))
 
-    download(PYTHON_URL.format(version=version, ext='xz' if version == '3.3.1' else 'gz'))
-    
-    os.chdir('Python-{version}'.format(version=version))    
+    download(PYTHON_URL.format(version=version, ext=EXTENSION[version]))
+
+    os.chdir('Python-{version}'.format(version=version))
     os.system('./configure --prefix=$HOME/usr/python ; make ; make install')
     os.chdir('..')
 
