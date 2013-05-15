@@ -105,4 +105,4 @@ for h5py_version in H5PY_VERSIONS:
 
 from multiprocessing import Pool
 p = Pool(processes=24)
-p.map(setup_virtualenv, all_versions[:1])
+p.map(setup_virtualenv, all_versions)
