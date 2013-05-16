@@ -1,0 +1,106 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<matrix-project>
+  <actions/>
+  <description>Hyperion radiative transfer code</description>
+  <logRotator class="hudson.tasks.LogRotator">
+    <daysToKeep>-1</daysToKeep>
+    <numToKeep>5</numToKeep>
+    <artifactDaysToKeep>-1</artifactDaysToKeep>
+    <artifactNumToKeep>5</artifactNumToKeep>
+  </logRotator>
+  <keepDependencies>false</keepDependencies>
+  <properties/>
+  <scm class="hudson.plugins.git.GitSCM" plugin="git@1.4.0">
+    <configVersion>2</configVersion>
+    <userRemoteConfigs>
+      <hudson.plugins.git.UserRemoteConfig>
+        <name></name>
+        <refspec></refspec>
+        <url>http://github.com/hyperion-rt/hyperion.git</url>
+      </hudson.plugins.git.UserRemoteConfig>
+    </userRemoteConfigs>
+    <branches>
+      <hudson.plugins.git.BranchSpec>
+        <name>master</name>
+      </hudson.plugins.git.BranchSpec>
+    </branches>
+    <disableSubmodules>false</disableSubmodules>
+    <recursiveSubmodules>false</recursiveSubmodules>
+    <doGenerateSubmoduleConfigurations>false</doGenerateSubmoduleConfigurations>
+    <authorOrCommitter>false</authorOrCommitter>
+    <clean>false</clean>
+    <wipeOutWorkspace>false</wipeOutWorkspace>
+    <pruneBranches>false</pruneBranches>
+    <remotePoll>false</remotePoll>
+    <ignoreNotifyCommit>false</ignoreNotifyCommit>
+    <useShallowClone>false</useShallowClone>
+    <buildChooser class="hudson.plugins.git.util.DefaultBuildChooser"/>
+    <gitTool>Default</gitTool>
+    <submoduleCfg class="list"/>
+    <relativeTargetDir></relativeTargetDir>
+    <reference></reference>
+    <excludedRegions></excludedRegions>
+    <excludedUsers></excludedUsers>
+    <gitConfigName></gitConfigName>
+    <gitConfigEmail></gitConfigEmail>
+    <skipTag>false</skipTag>
+    <includedRegions></includedRegions>
+    <scmName></scmName>
+  </scm>
+  <canRoam>true</canRoam>
+  <disabled>false</disabled>
+  <blockBuildWhenDownstreamBuilding>false</blockBuildWhenDownstreamBuilding>
+  <blockBuildWhenUpstreamBuilding>false</blockBuildWhenUpstreamBuilding>
+  <triggers class="vector">
+    <hudson.triggers.SCMTrigger>
+      <spec>H * * * *</spec>
+      <ignorePostCommitHooks>false</ignorePostCommitHooks>
+    </hudson.triggers.SCMTrigger>
+  </triggers>
+  <concurrentBuild>false</concurrentBuild>
+  <axes>
+    <hudson.matrix.TextAxis>
+      <name>FC</name>
+      <values>
+        <string>g95</string>
+        <string>gfortran-mp-4.3</string>
+        <string>gfortran-mp-4.4</string>
+        <string>gfortran-mp-4.5</string>
+        <string>gfortran-mp-4.6</string>
+        <string>gfortran-mp-4.7</string>
+        <string>ifort</string>
+        <string>pgfortran</string>
+      </values>
+    </hudson.matrix.TextAxis>
+  </axes>
+  <builders>
+    <hudson.tasks.Shell>
+      <command>PATH=/opt/pgi/osx86-64/11.10/bin:/opt/local/bin:/Users/Shared/Jenkins/Home/usr/mpich2/$FC-1.4.1p1/bin:/Users/Shared/Jenkins/Home/usr/hdf5/$FC-1.8.9/bin:$PATH ./configure FC=$FC --prefix=/Users/Shared/Jenkins/Home/usr/hyperion/$FC</command>
+    </hudson.tasks.Shell>
+    <hudson.tasks.Shell>
+      <command>PATH=/opt/pgi/osx86-64/11.10/bin:/opt/local/bin:/Users/Shared/Jenkins/Home/usr/mpich2/$FC-1.4.1p1/bin:/Users/Shared/Jenkins/Home/usr/hdf5/$FC-1.8.9/bin:$PATH make</command>
+    </hudson.tasks.Shell>
+    <hudson.tasks.Shell>
+      <command>PATH=/opt/pgi/osx86-64/11.10/bin:/opt/local/bin:/Users/Shared/Jenkins/Home/usr/mpich2/$FC-1.4.1p1/bin:/Users/Shared/Jenkins/Home/usr/hdf5/$FC-1.8.9/bin:$PATH make install</command>
+    </hudson.tasks.Shell>
+  </builders>
+  <publishers>
+    <hudson.tasks.Mailer plugin="mailer@1.4">
+      <recipients>thomas.robitaille@gmail.com</recipients>
+      <dontNotifyEveryUnstableBuild>false</dontNotifyEveryUnstableBuild>
+      <sendToIndividuals>false</sendToIndividuals>
+    </hudson.tasks.Mailer>
+    <hudson.tasks.BuildTrigger>
+      <childProjects>hyperion-master-python-comp-var-osx-10.8-multiconfig, hyperion-master-python-deps-var-osx-10.8-multiconfig</childProjects>
+      <threshold>
+        <name>SUCCESS</name>
+        <ordinal>0</ordinal>
+        <color>BLUE</color>
+      </threshold>
+    </hudson.tasks.BuildTrigger>
+  </publishers>
+  <buildWrappers/>
+  <executionStrategy class="hudson.matrix.DefaultMatrixExecutionStrategyImpl">
+    <runSequentially>false</runSequentially>
+  </executionStrategy>
+</matrix-project>

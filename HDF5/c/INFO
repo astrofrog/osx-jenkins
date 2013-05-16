@@ -1,0 +1,4 @@
+Build HDF5 1.8.5 for use with h5py (only version to work with all h5py versions)
+
+Installs to ~/usr/hdf5-c/
+
