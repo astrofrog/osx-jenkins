@@ -94,6 +94,9 @@ for h5py_version in H5PY_VERSIONS:
             if python_version in ['3.3']:
                 if version.LooseVersion(numpy_version) < version.LooseVersion("1.7.0"):
                     continue
+            if version.LooseVersion(python_version) >= version.LooseVersion("3.0"):
+                if h5py_version == '1.3.1':
+                    continue
             versions['pv'] = python_version
             versions['full'] = 'python{pv}-numpy{nv}-h5py{hv}'.format(**versions)
             if version.LooseVersion(numpy_version) >= version.LooseVersion("1.6.2"):
