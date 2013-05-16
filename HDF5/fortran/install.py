@@ -10,6 +10,7 @@ TARFILE = os.path.basename(URL)
 COMPILERS = ['pgfortran', 'gfortran-mp-4.3', 'gfortran-mp-4.4', 'gfortran-mp-4.5', 'gfortran-mp-4.6', 'gfortran-mp-4.7', 'g95', 'ifort']
 EXTRA = {}
 EXTRA['g95'] = 'CC=gcc-mp-4.4'
+PATH = "PATH=/opt/local/bin:/opt/pgi/osx86-64/11.10/bin:$PATH"
 
 # Download file
 if not os.path.exists(TARFILE):
@@ -29,10 +30,15 @@ for compiler in COMPILERS:
     os.chdir(compiler)
     os.chdir(VERSION)
     extra = EXTRA[compiler] if compiler in EXTRA else ""
-    os.system('PATH=/opt/local/bin:/opt/pgi/osx86-64/11.10/bin:$PATH ./configure --enable-fortran --enable-hl ' \
-                  + '--prefix=$HOME/usr/hdf5/%s-%s ' % (compiler, version_number) \
-                      + 'FC=%s %s >& log_configure' % (compiler, extra))
-    os.system('PATH=/opt/local/bin:$PATH make >& log_make')
-    os.system('PATH=/opt/local/bin:$PATH make install >& log_make_install')
+    if compiler == 'g95':
+        s = open('config/gnu-fflags', 'rb').read()
+        s = s.replace('-Wconversion', '')
+        s = s.replace('-Wunderflow', '')
+        open('config/gnu-fflags', 'wb').write(s)
+    os.system('{path} ./configure --enable-fortran --enable-hl '
+              '--prefix=$HOME/usr/hdf5/{compiler}-{version_number} '
+              'FC={compiler} {extra} >& log_configure'.format(path=PATH, compiler=compiler, version_number=version_number, extra=extra))
+    os.system('{path} make >& log_make'.format(path=PATH))
+    os.system('{path} make install >& log_make_install'.format(path=PATH))
     os.chdir(start)
 

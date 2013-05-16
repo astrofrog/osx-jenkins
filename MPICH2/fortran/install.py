@@ -10,6 +10,7 @@ TARFILE = os.path.basename(URL)
 COMPILERS = ['pgfortran', 'gfortran-mp-4.3', 'gfortran-mp-4.4', 'gfortran-mp-4.5', 'gfortran-mp-4.6', 'gfortran-mp-4.7', 'g95', 'ifort']
 EXTRA = {}
 EXTRA['g95'] = 'CC=gcc-mp-4.4'
+PATH = "PATH=/opt/local/bin:/opt/pgi/osx86-64/11.10/bin:$PATH"
 
 # Download file
 if not os.path.exists(TARFILE):
@@ -29,10 +30,10 @@ for compiler in COMPILERS:
     os.chdir(compiler)
     os.chdir(VERSION)
     extra = EXTRA[compiler] if compiler in EXTRA else ""
-    os.system('PATH=/opt/local/bin:/opt/pgi/osx86-64/11.10/bin:$PATH ./configure --enable-fc ' \
-              + '--prefix=$HOME/usr/mpich2/%s-%s ' % (compiler, version_number) \
-              + 'F77=%s FC=%s %s>& log_configure' % (compiler, compiler, extra))
-    os.system('PATH=/opt/local/bin:$PATH make >& log_make')
-    os.system('PATH=/opt/local/bin:$PATH make install >& log_make_install')
+    os.system('{path} ./configure --enable-fc '
+              '--prefix=$HOME/usr/mpich2/{compiler}-{version_number} '
+              'F77={compiler} FC={compiler} {extra} >& log_configure'.format(path=PATH, compiler=compiler, version_number=version_number, extra=extra))
+    os.system('{path} make >& log_make'.format(path=PATH))
+    os.system('{path} make install >& log_make_install'.format(path=PATH))
     os.chdir(start)
 
