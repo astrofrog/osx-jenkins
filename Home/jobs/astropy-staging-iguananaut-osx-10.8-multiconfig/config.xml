@@ -90,7 +90,7 @@
       <command>$HOME/virtualenvs/astropy.dev/python$PV-numpy$NV/bin/python setup.py build</command>
     </hudson.tasks.Shell>
     <hudson.tasks.Shell>
-      <command>$HOME/virtualenvs/astropy.dev/python$PV-numpy$NV/bin/python setup.py test -a &quot;--junitxml=$PWD/junit.xml --confcutdir=../../&quot;</command>
+      <command>PYTHONIOENCODING=UTF8 $HOME/virtualenvs/astropy.dev/python$PV-numpy$NV/bin/python setup.py test -a &quot;--junitxml=$PWD/junit.xml --confcutdir=../../&quot;</command>
     </hudson.tasks.Shell>
   </builders>
   <publishers>
