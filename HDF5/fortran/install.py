@@ -10,7 +10,7 @@ TARFILE = os.path.basename(URL)
 COMPILERS = ['pgfortran', 'gfortran-mp-4.3', 'gfortran-mp-4.4', 'gfortran-mp-4.5', 'gfortran-mp-4.6', 'gfortran-mp-4.7', 'g95', 'ifort']
 EXTRA = {}
 EXTRA['g95'] = 'CC=gcc-mp-4.4'
-PATH = "PATH=/opt/local/bin:/opt/pgi/osx86-64/11.10/bin:$PATH"
+PATH = "PATH=/opt/local/bin:/opt/pgi/osx86-64/13.2/bin:$PATH"
 
 # Download file
 if not os.path.exists(TARFILE):
