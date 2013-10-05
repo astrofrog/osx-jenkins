@@ -9,8 +9,10 @@
     <artifactNumToKeep>5</artifactNumToKeep>
   </logRotator>
   <keepDependencies>false</keepDependencies>
-  <properties/>
-  <scm class="hudson.plugins.git.GitSCM" plugin="git@1.4.0">
+  <properties>
+    <hudson.plugins.build__publisher.ExternalProjectProperty plugin="build-publisher@1.17"/>
+  </properties>
+  <scm class="hudson.plugins.git.GitSCM" plugin="git@1.5.0">
     <configVersion>2</configVersion>
     <userRemoteConfigs>
       <hudson.plugins.git.UserRemoteConfig>
@@ -51,7 +53,7 @@
   <disabled>false</disabled>
   <blockBuildWhenDownstreamBuilding>false</blockBuildWhenDownstreamBuilding>
   <blockBuildWhenUpstreamBuilding>false</blockBuildWhenUpstreamBuilding>
-  <triggers class="vector">
+  <triggers>
     <hudson.triggers.SCMTrigger>
       <spec>H * * * *</spec>
       <ignorePostCommitHooks>false</ignorePostCommitHooks>
@@ -89,11 +91,11 @@
       <command>$HOME/virtualenvs/astropy.dev/python$PV-numpy$NV/bin/python setup.py build</command>
     </hudson.tasks.Shell>
     <hudson.tasks.Shell>
-      <command>$HOME/virtualenvs/astropy.dev/python$PV-numpy$NV/bin/python setup.py test -a &quot;--junitxml=$PWD/junit.xml --confcutdir=../../&quot;</command>
+      <command>PYTHONIOENCODING=UTF8 $HOME/virtualenvs/astropy.dev/python$PV-numpy$NV/bin/python setup.py test -a &quot;--junitxml=$PWD/junit.xml --confcutdir=../../&quot;</command>
     </hudson.tasks.Shell>
   </builders>
   <publishers>
-    <hudson.plugins.warnings.WarningsPublisher plugin="warnings@4.26">
+    <hudson.plugins.warnings.WarningsPublisher plugin="warnings@4.35">
       <healthy></healthy>
       <unHealthy></unHealthy>
       <thresholdLimit>low</thresholdLimit>
@@ -102,7 +104,7 @@
       <canRunOnFailed>false</canRunOnFailed>
       <useStableBuildAsReference>false</useStableBuildAsReference>
       <useDeltaValues>false</useDeltaValues>
-      <thresholds plugin="analysis-core@1.49">
+      <thresholds plugin="analysis-core@1.54">
         <unstableTotalAll></unstableTotalAll>
         <unstableTotalHigh></unstableTotalHigh>
         <unstableTotalNormal></unstableTotalNormal>
