@@ -16,3 +16,6 @@ Install the following plugins:
 - Violations
 - Warnings plugin
 - xUnit plugin
+
+Set up build publisher URL
+Set up proxy in plugins menu

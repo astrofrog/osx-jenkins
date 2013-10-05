@@ -3,7 +3,7 @@ import shutil
 import urllib2
 
 SETUPTOOLS_VERSION = "1.1.6"
-PIP_VERSION = "1.4.1"
+PIP_VERSION = "1.3.1"
 
 PYTHON_URL = "http://www.python.org/ftp/python/{version}/Python-{version}.{ext}"
 SETUPTOOLS_URL = "https://pypi.python.org/packages/source/s/setuptools/setuptools-{sv}.tar.gz".format(sv=SETUPTOOLS_VERSION)
