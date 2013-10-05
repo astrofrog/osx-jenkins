@@ -5,8 +5,7 @@ import subprocess
 from copy import deepcopy
 from distutils import version
 
-#NUMPY_VERSIONS = ['1.4.1', '1.5.0', '1.5.1', '1.6.0', '1.6.1', '1.6.2', '1.7.0', '1.7.1']
-NUMPY_VERSIONS = ['1.7.1']
+NUMPY_VERSIONS = ['1.4.1', '1.5.0', '1.5.1', '1.6.0', '1.6.1', '1.6.2', '1.7.0', '1.7.1']
 PYTHON_VERSIONS = ['2.6', '2.7', '3.1', '3.2', '3.3']
 
 NUMPY_URL = "https://pypi.python.org/packages/source/n/numpy/numpy-{nv}.tar.gz"

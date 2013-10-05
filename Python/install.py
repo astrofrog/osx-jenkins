@@ -2,11 +2,11 @@ import os
 import shutil
 import urllib2
 
-DISTRIBUTE_VERSION = "0.6.40"
-PIP_VERSION = "1.3.1"
+SETUPTOOLS_VERSION = "1.1.6"
+PIP_VERSION = "1.4.1"
 
 PYTHON_URL = "http://www.python.org/ftp/python/{version}/Python-{version}.{ext}"
-DISTRIBUTE_URL = "https://pypi.python.org/packages/source/d/distribute/distribute-{dv}.tar.gz".format(dv=DISTRIBUTE_VERSION)
+SETUPTOOLS_URL = "https://pypi.python.org/packages/source/s/setuptools/setuptools-{sv}.tar.gz".format(sv=SETUPTOOLS_VERSION)
 PIP_URL = "https://pypi.python.org/packages/source/p/pip/pip-{pv}.tar.gz".format(pv=PIP_VERSION)
 
 def download(url):
@@ -22,12 +22,12 @@ def download(url):
 
 EXTENSION = {}
 EXTENSION['2.6.8'] = 'tgz'
-EXTENSION['2.7.4'] = 'tgz'
+EXTENSION['2.7.5'] = 'tgz'
 EXTENSION['3.1.5'] = 'tgz'
-EXTENSION['3.2.4'] = 'tar.bz2'
-EXTENSION['3.3.1'] = 'tar.bz2'
+EXTENSION['3.2.5'] = 'tar.bz2'
+EXTENSION['3.3.2'] = 'tar.bz2'
 
-for version in ['2.6.8', '2.7.4', '3.1.5', '3.2.4', '3.3.1']:
+for version in ['2.6.8', '2.7.5', '3.1.5', '3.2.5', '3.3.2']:
 
     short_version = version[:3]
 
@@ -42,16 +42,16 @@ for version in ['2.6.8', '2.7.4', '3.1.5', '3.2.4', '3.3.1']:
 
     shutil.rmtree('Python-{0:s}'.format(version))
 
-    if os.path.exists('distribute-{dv}'.format(dv=DISTRIBUTE_VERSION)):
-        shutil.rmtree('distribute-{dv}'.format(dv=DISTRIBUTE_VERSION))
+    if os.path.exists('setuptools-{sv}'.format(sv=SETUPTOOLS_VERSION)):
+        shutil.rmtree('setuptools-{sv}'.format(sv=SETUPTOOLS_VERSION))
 
-    download(DISTRIBUTE_URL)
+    download(SETUPTOOLS_URL)
 
-    os.chdir('distribute-{dv}'.format(dv=DISTRIBUTE_VERSION))
+    os.chdir('setuptools-{sv}'.format(sv=SETUPTOOLS_VERSION))
     os.system('$HOME/usr/python/bin/python{0:s} setup.py install'.format(short_version))
     os.chdir('..')
 
-    shutil.rmtree('distribute-{dv}'.format(dv=DISTRIBUTE_VERSION))
+    shutil.rmtree('setuptools-{sv}'.format(sv=SETUPTOOLS_VERSION))
 
     if os.path.exists('pip-{pipv}'.format(pipv=PIP_VERSION)):
         shutil.rmtree('pip-{pipv}'.format(pipv=PIP_VERSION))
