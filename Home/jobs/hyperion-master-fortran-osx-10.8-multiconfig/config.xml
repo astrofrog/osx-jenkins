@@ -10,7 +10,7 @@
   </logRotator>
   <keepDependencies>false</keepDependencies>
   <properties/>
-  <scm class="hudson.plugins.git.GitSCM" plugin="git@1.4.0">
+  <scm class="hudson.plugins.git.GitSCM" plugin="git@1.5.0">
     <configVersion>2</configVersion>
     <userRemoteConfigs>
       <hudson.plugins.git.UserRemoteConfig>
@@ -51,7 +51,7 @@
   <disabled>false</disabled>
   <blockBuildWhenDownstreamBuilding>false</blockBuildWhenDownstreamBuilding>
   <blockBuildWhenUpstreamBuilding>false</blockBuildWhenUpstreamBuilding>
-  <triggers class="vector">
+  <triggers>
     <hudson.triggers.SCMTrigger>
       <spec>H * * * *</spec>
       <ignorePostCommitHooks>false</ignorePostCommitHooks>
@@ -75,17 +75,17 @@
   </axes>
   <builders>
     <hudson.tasks.Shell>
-      <command>PATH=/opt/pgi/osx86-64/11.10/bin:/opt/local/bin:/Users/Shared/Jenkins/Home/usr/mpich2/$FC-1.4.1p1/bin:/Users/Shared/Jenkins/Home/usr/hdf5/$FC-1.8.9/bin:$PATH ./configure FC=$FC --prefix=/Users/Shared/Jenkins/Home/usr/hyperion/$FC</command>
+      <command>PATH=/opt/pgi/osx86-64/13.2/bin:/opt/local/bin:/Users/Shared/Jenkins/usr/fortran_deps/$FC/bin:$PATH ./configure FC=$FC --prefix=/Users/Shared/Jenkins/usr/hyperion/$FC</command>
     </hudson.tasks.Shell>
     <hudson.tasks.Shell>
-      <command>PATH=/opt/pgi/osx86-64/11.10/bin:/opt/local/bin:/Users/Shared/Jenkins/Home/usr/mpich2/$FC-1.4.1p1/bin:/Users/Shared/Jenkins/Home/usr/hdf5/$FC-1.8.9/bin:$PATH make</command>
+      <command>PATH=/opt/pgi/osx86-64/13.2/bin:/opt/local/bin:/Users/Shared/Jenkins/usr/fortran_deps/$FC/bin:$PATH make</command>
     </hudson.tasks.Shell>
     <hudson.tasks.Shell>
-      <command>PATH=/opt/pgi/osx86-64/11.10/bin:/opt/local/bin:/Users/Shared/Jenkins/Home/usr/mpich2/$FC-1.4.1p1/bin:/Users/Shared/Jenkins/Home/usr/hdf5/$FC-1.8.9/bin:$PATH make install</command>
+      <command>PATH=/opt/pgi/osx86-64/13.2/bin:/opt/local/bin:/Users/Shared/Jenkins/usr/fortran_deps/$FC/bin:$PATH make install</command>
     </hudson.tasks.Shell>
   </builders>
   <publishers>
-    <hudson.tasks.Mailer plugin="mailer@1.4">
+    <hudson.tasks.Mailer plugin="mailer@1.5">
       <recipients>thomas.robitaille@gmail.com</recipients>
       <dontNotifyEveryUnstableBuild>false</dontNotifyEveryUnstableBuild>
       <sendToIndividuals>false</sendToIndividuals>
@@ -96,6 +96,7 @@
         <name>SUCCESS</name>
         <ordinal>0</ordinal>
         <color>BLUE</color>
+        <completeBuild>true</completeBuild>
       </threshold>
     </hudson.tasks.BuildTrigger>
   </publishers>

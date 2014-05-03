@@ -1,7 +1,7 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <matrix-project>
   <actions/>
-  <description>@iguananaut's astropy staging branch on MacOS 10.8</description>
+  <description>@iguananaut&apos;s astropy staging branch on MacOS 10.8</description>
   <logRotator class="hudson.tasks.LogRotator">
     <daysToKeep>-1</daysToKeep>
     <numToKeep>5</numToKeep>
@@ -9,10 +9,8 @@
     <artifactNumToKeep>5</artifactNumToKeep>
   </logRotator>
   <keepDependencies>false</keepDependencies>
-  <properties>
-    <hudson.plugins.build__publisher.ExternalProjectProperty plugin="build-publisher@1.17"/>
-  </properties>
-  <scm class="hudson.plugins.git.GitSCM" plugin="git@1.4.0">
+  <properties/>
+  <scm class="hudson.plugins.git.GitSCM" plugin="git@1.5.0">
     <configVersion>2</configVersion>
     <userRemoteConfigs>
       <hudson.plugins.git.UserRemoteConfig>
@@ -53,7 +51,7 @@
   <disabled>false</disabled>
   <blockBuildWhenDownstreamBuilding>false</blockBuildWhenDownstreamBuilding>
   <blockBuildWhenUpstreamBuilding>false</blockBuildWhenUpstreamBuilding>
-  <triggers class="vector">
+  <triggers>
     <hudson.triggers.SCMTrigger>
       <spec>H * * * *</spec>
       <ignorePostCommitHooks>false</ignorePostCommitHooks>
@@ -71,6 +69,7 @@
         <string>1.6.2</string>
         <string>1.7.0</string>
         <string>1.7.1</string>
+        <string>1.8.0</string>
       </values>
     </hudson.matrix.TextAxis>
     <hudson.matrix.TextAxis>
@@ -84,7 +83,7 @@
       </values>
     </hudson.matrix.TextAxis>
   </axes>
-  <combinationFilter>!(PV == &quot;3.3&quot; &amp;&amp; NV[2] != &quot;7&quot;)</combinationFilter>
+  <combinationFilter>!(PV == &quot;3.3&quot; &amp;&amp; NV[2] == &quot;5&quot;) &amp;&amp; !(PV == &quot;3.3&quot; &amp;&amp; NV[2] == &quot;6&quot;) &amp;&amp; !(PV == &quot;3.1&quot; &amp;&amp; NV[2] == &quot;8&quot;)</combinationFilter>
   <builders>
     <hudson.tasks.Shell>
       <command>$HOME/virtualenvs/astropy.dev/python$PV-numpy$NV/bin/python setup.py build</command>
@@ -94,7 +93,7 @@
     </hudson.tasks.Shell>
   </builders>
   <publishers>
-    <hudson.plugins.warnings.WarningsPublisher plugin="warnings@4.26">
+    <hudson.plugins.warnings.WarningsPublisher plugin="warnings@4.35">
       <healthy></healthy>
       <unHealthy></unHealthy>
       <thresholdLimit>low</thresholdLimit>
@@ -103,7 +102,7 @@
       <canRunOnFailed>false</canRunOnFailed>
       <useStableBuildAsReference>false</useStableBuildAsReference>
       <useDeltaValues>false</useDeltaValues>
-      <thresholds plugin="analysis-core@1.49">
+      <thresholds plugin="analysis-core@1.54">
         <unstableTotalAll></unstableTotalAll>
         <unstableTotalHigh></unstableTotalHigh>
         <unstableTotalNormal></unstableTotalNormal>
@@ -128,7 +127,7 @@
       <keepLongStdio>false</keepLongStdio>
       <testDataPublishers/>
     </hudson.tasks.junit.JUnitResultArchiver>
-    <xunit plugin="xunit@1.58">
+    <xunit plugin="xunit@1.61">
       <types/>
       <thresholds>
         <org.jenkinsci.plugins.xunit.threshold.FailedThreshold>
